@@ -2,62 +2,57 @@ package com.tester;
 
 import java.util.Scanner;
 
-import com.sunbeam.StackUsingQueue;
+import com.sunbeam.Stack;
 
 public class QueueStack {
-	static Scanner sc = new Scanner(System.in);
+		public static void main(String[] args) {
+			Scanner sc = new Scanner(System.in);
+			int choice, size;
+			System.out.print("Enter size : ");
+			size = sc.nextInt();
+			Stack stack1 = new Stack(size);
+			Stack stack2 = new Stack(size);
 
-	static int menu() {
-		int choice;
-		System.out.println("*******");
-		System.out.println("0. EXIT");
-		System.out.println("1. Push");
-		System.out.println("2. Pop");
-		System.out.println("3. Peek");
-		System.out.println("4. Display");
-		choice = sc.nextInt();
-		return choice;
-	}
+			do {
+				System.out.println("0 : Exit\n1 : Push\n2 : Pop\n3 : Peek");
+				System.out.print("Enter your choice : ");
+				choice = sc.nextInt();
+				switch (choice) {
+				case 0:
+					break;
+				case 1:
+					if (stack1.isFull())
+						System.out.println("Queue is full.");
+					else {
+						int element;
+						System.out.print("Enter element to push : ");
+						element = sc.nextInt();
+						while (!stack1.isEmpty())
+							stack2.push(stack1.pop());
+						stack2.push(element);
+						while (!stack2.isEmpty())
+							stack1.push(stack2.pop());
+					}
+					break;
 
-	public static void main(String[] args) {
-		System.out.println("Enter stack size ");
-		int stacksize = sc.nextInt();
-		StackUsingQueue suq = new StackUsingQueue(stacksize);
-		int choice, counter = 0;
-		while ((choice = menu()) != 0) {
-			switch (choice) {
-			case 1:
-				if (!suq.isFull()) {
-					
-					System.out.println("Enter data");					
-				int element = sc.nextInt();
-				suq.push(element);
+				case 2:
+					if (stack1.isEmpty())
+						System.out.println("Queue is empty.");
+					else
+						stack1.pop();
+					break;
+
+				case 3:
+					if (stack1.isEmpty())
+						System.out.println("Queue is empty.");
+					else
+						System.out.println("Peek : " + stack1.peek());
+					break;
+				default:
+					System.out.println("Enter a valid choice.");
 				}
-				else
-					System.out.println("stack is full");					
-				counter++;
-
-				break;
-			case 2:
-				suq.pop();
-				counter--;
-				break;
-			case 3:
-				System.out.println("Peeked element"+suq.peek());
-				break;
-			case 4:
-				for (int i = 0; i < counter; i++) {
-					System.out.println("Values are " + suq.pop());					
-				}
-				System.out.println();
-				break;
-
-			default:
-				System.out.println("Invlaid Entry ");
-				break;
-			}
+			} while (choice != 0);
 
 		}
-	}
 
-}
+	}
